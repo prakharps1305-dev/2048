@@ -1,7 +1,7 @@
-board =[[0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0]]
+board =[[2,0,0,0],
+        [2,0,0,0],
+        [4,0,0,0],
+        [4,0,0,0]]
 def render(board):
     for row in board:
         print(" ".join(f"{('.' if c == 0 else c):>4}" for c in row))
@@ -18,12 +18,20 @@ def slide_left(row):
             merged.append(tiles[i])
             i+=1
     return merged + [0] * (4 - len(merged))
-print(slide_left([2, 0, 2, 0]))  # [4,0,0,0]
-print(slide_left([2, 2, 2, 0]))  # [4,2,0,0]
-print(slide_left([2, 2, 2, 2]))  # [4,4,0,0]
-print(slide_left([4, 4, 8, 0]))  # [8,8,0,0]
-print(slide_left([0, 0, 0, 2]))  # [2,0,0,0]
+
+def slide_right(row):
+    return slide_left(row[::-1])[::-1]
+
+def transpose(board):
+    return [[board[r][c] for r in range(4)] for c in range(4)]
+
+def slide_up(board):
+    t = transpose(board)
+    t = [slide_left(row) for row in t]     # slide each row left
+    return transpose(t)
 
 
-
-
+def slide_up(board):
+    t = transpose(board)
+    t = [slide_right(row) for row in t]     # slide each row left
+    return transpose(t)
