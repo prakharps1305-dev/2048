@@ -2,7 +2,6 @@ import random
 def render(board):
     for row in board:
         print(" ".join(f"{('.' if c == 0 else c):>4}" for c in row))
-render(board)
 def slide_left(row):
     tiles = [c for c in row if c != 0]
     merged = []
@@ -40,11 +39,6 @@ def spawn(board):
     r, c = random.choice(empties)
     value = 2 if random.random() < 0.9 else 4
     board[r][c] = value
-
-b = [[0]*4 for _ in range(4)]
-spawn(b)
-spawn(b)
-render(b)
 
 def move_left(board):
     return [slide_left(row) for row in board]
@@ -89,5 +83,5 @@ def play():
             print("game over")
             break
         # what
-
-play()
+if __name__ == "__main__":
+    play()
