@@ -8,6 +8,55 @@ def legal_moves(board):
             moves.append(move)
     return moves
 
+
+
+# --- heuristic: dumb for now, Phase 6 makes it good ---
+def score(board):
+    empties = sum(1 for row in board for c in row if c == 0)
+    highest = max(max(row) for row in board)
+    return empties * 10 + highest
+
+
+def copy_board(board):
+    return [row[:] for row in board]
+
+
+def expectimax(board, depth, is_max):
+    if depth == 0 or is_game_over(board):
+        return score(board)
+
+    if is_max:                          # my turn: I choose, so take the best
+        best = float('-inf')
+        for move in legal_moves(board):
+            value = expectimax(move(board), depth - 1, False)
+            best = max(best, value)
+        return best
+
+    else:                               # spawn: random, so average over outcomes
+        empties = [(r, c) for r in range(4) for c in range(4) if board[r][c] == 0]
+        if not empties:
+            return score(board)
+
+        total = 0
+        for (r, c) in empties:
+            for value, prob in ((2, 0.9), (4, 0.1)):
+                new_board = copy_board(board)
+                new_board[r][c] = value
+                p = prob / len(empties)
+                total += p * expectimax(new_board, depth - 1, True)
+        return total
+
+
+def best_move(board, depth=4):
+    best_value = float('-inf')
+    chosen = None
+    for move in legal_moves(board):
+        value = expectimax(move(board), depth - 1, False)
+        if value > best_value:
+            best_value = value
+            chosen = move
+    return chosen
+
 def run_bot():
     board = [[0]*4 for _ in range(4)]
     spawn(board); spawn(board)
@@ -15,7 +64,7 @@ def run_bot():
         render(board)
         if is_game_over(board):
             break
-        move = random.choice(legal_moves(board))
+        move = best_move(board)
         board = move(board)       # apply the chosen move
         spawn(board)                # add a new tile
 
