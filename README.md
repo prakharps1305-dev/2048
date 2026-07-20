@@ -7,6 +7,7 @@ A terminal implementation of 2048 with an AI that plays it. Written in Python, n
 ```bash
 python game.py    # play yourself (w/a/s/d)
 python bot.py     # watch the bot play a game
+python gui.py     # play in a window, or watch the bot (requires tkinter)
 ```
 
 To reproduce the benchmark, call `benchmark(100)` instead of `run_bot()` at the bottom of
@@ -42,9 +43,13 @@ separate weight to discourage crowding.
 
 ## Notes on AI assistance
 
-The game engine (board representation, merge logic, direction transforms, spawn, game-over
-detection, game loop) was written by hand. The expectimax search function was implemented
-with AI assistance; the heuristic design and evaluation were my own.
+## Notes on AI assistance
+
+The game engine — board representation, merge logic, direction transforms, spawn, game-over
+detection, and the game loop — was written by hand. The expectimax search function was
+implemented with AI assistance. The heuristic design and the benchmarking were my own.
+
+`gui.py` was written entirely by Claude Code from a spec I wrote. I did not write any of it.
 
 ## Possible improvements
 
