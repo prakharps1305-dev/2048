@@ -56,7 +56,7 @@ def best_move(board, depth=4):
     best_value = float('-inf')
     chosen = None
     for move in legal_moves(board):
-        value = expectimax(move(board), depth - 5, False)
+        value = expectimax(move(board), depth - 1, False)
         if value > best_value:
             best_value = value
             chosen = move
@@ -85,4 +85,4 @@ def benchmark(n=20):
     print(f"worst tile: {min(results)}")
     print(f"all: {sorted(results, reverse=True)}")
 
-benchmark(20)
+benchmark(100)
