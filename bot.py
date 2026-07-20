@@ -62,15 +62,27 @@ def best_move(board, depth=4):
             chosen = move
     return chosen
 
-def run_bot():
+def run_bot(show=True):
     board = [[0]*4 for _ in range(4)]
     spawn(board); spawn(board)
     while True:
-        render(board)
+        if show:
+            render(board)
         if is_game_over(board):
             break
         move = best_move(board)
         board = move(board)
         spawn(board)
+    return max(max(row) for row in board)
 
-run_bot()
+
+def benchmark(n=20):
+    results = [run_bot(show=False) for _ in range(n)]
+    wins = sum(1 for r in results if r >= 2048)
+    print(f"games: {n}")
+    print(f"reached 2048: {wins}/{n}")
+    print(f"best tile: {max(results)}")
+    print(f"worst tile: {min(results)}")
+    print(f"all: {sorted(results, reverse=True)}")
+
+benchmark(20)
