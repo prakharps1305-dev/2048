@@ -85,4 +85,5 @@ def benchmark(n=20):
     print(f"worst tile: {min(results)}")
     print(f"all: {sorted(results, reverse=True)}")
 
-run_bot()
+if __name__ == "__main__":
+    run_bot()
