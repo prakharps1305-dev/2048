@@ -6,8 +6,11 @@ A terminal implementation of 2048 with an AI that plays it. Written in Python, n
 
 ```bash
 python game.py    # play yourself (w/a/s/d)
-python bot.py     # watch the bot play
+python bot.py     # watch the bot play a game
 ```
+
+To reproduce the benchmark, call `benchmark(100)` instead of `run_bot()` at the bottom of
+`bot.py` — it runs 100 silent games and prints stats (takes a few minutes).
 
 ## Result
 

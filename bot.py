@@ -85,4 +85,4 @@ def benchmark(n=20):
     print(f"worst tile: {min(results)}")
     print(f"all: {sorted(results, reverse=True)}")
 
-benchmark(100)
+run_bot()
